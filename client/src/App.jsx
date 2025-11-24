@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css';
 
+/**
+ * The main application component.
+ * @returns {JSX.Element} The rendered App component.
+ */
 function App() {
   const [products, setProducts] = useState([]);
   const [deepLink, setDeepLink] = useState('');
@@ -9,15 +13,22 @@ function App() {
   const [idea, setIdea] = useState('');
   const [prompt, setPrompt] = useState('');
 
+  // Fetch products from the API when the component mounts.
   useEffect(() => {
     axios.get('/api/products').then(res => setProducts(res.data.products || []));
   }, []);
 
+  /**
+   * Generates a CJ Affiliate deep link.
+   */
   const generateDeepLink = async () => {
     const { data } = await axios.post('/api/deeplink', form);
     setDeepLink(data.deepLink);
   };
 
+  /**
+   * Generates an AI prompt for a t-shirt design.
+   */
   const generatePrompt = async () => {
     const { data } = await axios.post('/api/ai/prompt', { idea });
     setPrompt(data.prompt);
