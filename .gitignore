@@ -131,3 +131,13 @@ dist
 
 # Replit debugger
 .breakpoints
+
+# Vite
+client/dist/
+client/.vite/
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store

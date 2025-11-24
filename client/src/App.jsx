@@ -10,16 +10,16 @@ function App() {
   const [prompt, setPrompt] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/products').then(res => setProducts(res.data.products || []));
+    axios.get('/api/products').then(res => setProducts(res.data.products || []));
   }, []);
 
   const generateDeepLink = async () => {
-    const { data } = await axios.post('http://localhost:5000/api/deeplink', form);
+    const { data } = await axios.post('/api/deeplink', form);
     setDeepLink(data.deepLink);
   };
 
   const generatePrompt = async () => {
-    const { data } = await axios.post('http://localhost:5000/api/ai/prompt', { idea });
+    const { data } = await axios.post('/api/ai/prompt', { idea });
     setPrompt(data.prompt);
   };
 
