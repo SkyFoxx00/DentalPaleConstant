@@ -1,0 +1,1 @@
+User requested a corrected Replit project packaging with valid file paths for React + Node full-stack T-shirt design app.
