@@ -8,6 +8,8 @@ function App() {
   const [form, setForm] = useState({ baseLink: '', affiliateId: '', campaign: '' });
   const [idea, setIdea] = useState('');
   const [prompt, setPrompt] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [geolocation, setGeolocation] = useState(null);
 
   useEffect(() => {
     axios.get('/api/products').then(res => setProducts(res.data.products || []));
@@ -21,6 +23,15 @@ function App() {
   const generatePrompt = async () => {
     const { data } = await axios.post('/api/ai/prompt', { idea });
     setPrompt(data.prompt);
+  };
+
+  const lookupPhoneNumber = async () => {
+    try {
+      const { data } = await axios.post('/api/geolocation', { phoneNumber });
+      setGeolocation(data);
+    } catch (err) {
+      setGeolocation({ error: 'Invalid phone number' });
+    }
   };
 
   return (
@@ -38,6 +49,25 @@ function App() {
         {prompt && (
           <div className="prompt-box">
             <strong>Prompt:</strong> {prompt}
+          </div>
+        )}
+      </section>
+
+      <section>
+        <h2>Phone Number Geolocation</h2>
+        <input
+          placeholder="Enter phone number (e.g., +12133734253)"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+        />
+        <button onClick={lookupPhoneNumber}>Lookup</button>
+        {geolocation && (
+          <div className="prompt-box">
+            {geolocation.error ? (
+              <p style={{ color: 'red' }}>{geolocation.error}</p>
+            ) : (
+              <p>Country: {geolocation.country}</p>
+            )}
           </div>
         )}
       </section>
