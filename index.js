@@ -29,4 +29,12 @@ app.post('/api/ai/prompt', (req, res) => {
   res.json({ prompt });
 });
 
+// Phone tracker endpoint
+app.post('/api/track-phone', (req, res) => {
+  // Simulate tracking a phone number and return a random coordinate
+  const lat = Math.random() * 180 - 90;
+  const lng = Math.random() * 360 - 180;
+  res.json({ lat, lng });
+});
+
 app.listen(3000, () => console.log('Server running on port 3000'));
